@@ -1,24 +1,8 @@
 import { json } from '@sveltejs/kit';
 import { getAllPosts, savePost, verifyAuth } from '$lib/posts.js';
-import { exec } from 'child_process';
-import { promisify } from 'util';
 import { Octokit } from 'octokit';
 import { env } from '$env/dynamic/private';
 import matter from 'gray-matter';
-
-const execAsync = promisify(exec);
-
-async function gitCommitAndPush(message) {
-	try {
-		await execAsync('git add src/posts');
-		await execAsync(`git commit -m "${message.replace(/"/g, '\\"')}"`);
-		await execAsync('git push');
-		return { success: true };
-	} catch (error) {
-		console.error('Git error:', error);
-		return { success: false, error: error.message };
-	}
-}
 
 async function savePostViaGitHub(post) {
 	const octokit = new Octokit({ auth: env.GITHUB_TOKEN });
@@ -94,14 +78,12 @@ export async function POST({ request }) {
 				method: 'github-api'
 			});
 		} else {
-			// Use local filesystem + git
+			// Use local filesystem
 			const savedSlug = savePost(post);
-			const gitResult = await gitCommitAndPush(`Add post: ${post.id}`);
 			return json({
 				success: true,
 				slug: savedSlug,
-				gitPushed: gitResult.success,
-				method: 'local-git'
+				method: 'local-filesystem'
 			});
 		}
 	} catch (error) {
