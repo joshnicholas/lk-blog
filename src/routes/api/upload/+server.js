@@ -1,8 +1,71 @@
 import { json } from '@sveltejs/kit';
 import { verifyAuth } from '$lib/posts.js';
-import { put } from '@vercel/blob';
 import sharp from 'sharp';
 import { env } from '$env/dynamic/private';
+import { writeFileSync, mkdirSync, existsSync } from 'fs';
+import { join } from 'path';
+import { Octokit } from 'octokit';
+
+async function saveImageViaGitHub(buffer, processedBuffer, timestamp, extension) {
+	const octokit = new Octokit({ auth: env.GITHUB_TOKEN });
+
+	const rawFilename = `${timestamp}.${extension}`;
+	const processedFilename = `${timestamp}.webp`;
+	const rawPath = `static/uploads/raw/${rawFilename}`;
+	const processedPath = `static/uploads/${processedFilename}`;
+
+	try {
+		// Upload raw version
+		await octokit.rest.repos.createOrUpdateFileContents({
+			owner: env.GITHUB_OWNER,
+			repo: env.GITHUB_REPO,
+			path: rawPath,
+			message: `Upload image: ${rawFilename}`,
+			content: buffer.toString('base64'),
+			branch: 'main'
+		});
+
+		// Upload processed version
+		await octokit.rest.repos.createOrUpdateFileContents({
+			owner: env.GITHUB_OWNER,
+			repo: env.GITHUB_REPO,
+			path: processedPath,
+			message: `Upload processed image: ${processedFilename}`,
+			content: processedBuffer.toString('base64'),
+			branch: 'main'
+		});
+
+		return {
+			success: true,
+			url: `/uploads/${processedFilename}`,
+			filename: processedFilename
+		};
+	} catch (error) {
+		console.error('GitHub upload error:', error);
+		return { success: false, error: error.message };
+	}
+}
+
+function saveImageLocally(buffer, processedBuffer, timestamp, extension) {
+	const rawDir = 'static/uploads/raw';
+	if (!existsSync(rawDir)) {
+		mkdirSync(rawDir, { recursive: true });
+	}
+
+	const rawFilename = `${timestamp}.${extension}`;
+	const processedFilename = `${timestamp}.webp`;
+	const rawPath = join(rawDir, rawFilename);
+	const processedPath = join('static/uploads', processedFilename);
+
+	writeFileSync(rawPath, buffer);
+	writeFileSync(processedPath, processedBuffer);
+
+	return {
+		success: true,
+		url: `/uploads/${processedFilename}`,
+		filename: processedFilename
+	};
+}
 
 export async function POST({ request }) {
 	try {
@@ -24,24 +87,12 @@ export async function POST({ request }) {
 			return json({ error: 'Only image files are accepted' }, { status: 400 });
 		}
 
-		if (!env.BLOB_READ_WRITE_TOKEN) {
-			return json({ error: 'Blob storage not configured' }, { status: 500 });
-		}
-
 		const timestamp = Date.now();
 		const extension = file.name.split('.').pop();
-		const rawFilename = `raw/${timestamp}.${extension}`;
 
 		// Get file buffer
 		const arrayBuffer = await file.arrayBuffer();
 		const buffer = Buffer.from(arrayBuffer);
-
-		// Upload raw version to Vercel Blob
-		const rawBlob = await put(rawFilename, buffer, {
-			access: 'public',
-			contentType: file.type,
-			token: env.BLOB_READ_WRITE_TOKEN
-		});
 
 		// Process image with Sharp
 		const processedBuffer = await sharp(buffer)
@@ -52,19 +103,26 @@ export async function POST({ request }) {
 			.webp({ quality: 85 })
 			.toBuffer();
 
-		// Upload processed version to Vercel Blob
-		const processedFilename = `${timestamp}.webp`;
-		const processedBlob = await put(processedFilename, processedBuffer, {
-			access: 'public',
-			contentType: 'image/webp',
-			token: env.BLOB_READ_WRITE_TOKEN
-		});
+		// Check if running on Vercel
+		const isVercel = !!process.env.VERCEL;
+
+		let result;
+		if (isVercel) {
+			// Use GitHub API
+			result = await saveImageViaGitHub(buffer, processedBuffer, timestamp, extension);
+		} else {
+			// Use local filesystem
+			result = saveImageLocally(buffer, processedBuffer, timestamp, extension);
+		}
+
+		if (!result.success) {
+			return json({ error: result.error }, { status: 500 });
+		}
 
 		return json({
 			success: true,
-			url: processedBlob.url,
-			filename: processedFilename,
-			rawUrl: rawBlob.url
+			url: result.url,
+			filename: result.filename
 		});
 	} catch (error) {
 		console.error('Upload error:', error);

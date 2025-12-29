@@ -8,7 +8,7 @@
 <div id='navblock' class='block' style={csso}>
     <ul id='navynav' class='space-x-6 flex justify-center text-l font-semibold'>
         <li class="mr-0">
-            <a href='https://joshnicholas.com/'>scribbles</a>
+            <a rel="me" href='https://joshnicholas.com/'>scribbles</a>
         </li >
         <li class="mr-0">
             <a href='/'>blog</a>
@@ -17,7 +17,7 @@
             <a href='/tinkering'>tinkering</a>
         </li > -->
         <li class="mr-0">
-            <a href='https://joshnicholas.com/about'>about</a>
+            <a rel="me" href='https://joshnicholas.com/about'>about</a>
         </li >
         <li class="mr-0">
             <a href='https://www.theguardian.com/profile/josh-nicholas' target='_blank' rel="me">guardian⤴</a>
