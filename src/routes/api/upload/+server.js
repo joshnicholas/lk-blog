@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import { verifyAuth } from '$lib/posts.js';
 import { put } from '@vercel/blob';
 import sharp from 'sharp';
-import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export async function POST({ request }) {
 	try {
@@ -24,7 +24,7 @@ export async function POST({ request }) {
 			return json({ error: 'Only image files are accepted' }, { status: 400 });
 		}
 
-		if (!BLOB_READ_WRITE_TOKEN) {
+		if (!env.BLOB_READ_WRITE_TOKEN) {
 			return json({ error: 'Blob storage not configured' }, { status: 500 });
 		}
 
@@ -40,7 +40,7 @@ export async function POST({ request }) {
 		const rawBlob = await put(rawFilename, buffer, {
 			access: 'public',
 			contentType: file.type,
-			token: BLOB_READ_WRITE_TOKEN
+			token: env.BLOB_READ_WRITE_TOKEN
 		});
 
 		// Process image with Sharp
@@ -57,7 +57,7 @@ export async function POST({ request }) {
 		const processedBlob = await put(processedFilename, processedBuffer, {
 			access: 'public',
 			contentType: 'image/webp',
-			token: BLOB_READ_WRITE_TOKEN
+			token: env.BLOB_READ_WRITE_TOKEN
 		});
 
 		return json({
