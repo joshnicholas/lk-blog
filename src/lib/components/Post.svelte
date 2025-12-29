@@ -1,0 +1,103 @@
+<script>
+	import { onMount } from 'svelte';
+
+	let { post } = $props();
+	let showLightbox = $state(false);
+	let lightboxSrc = $state('');
+	let articleElement;
+
+	onMount(() => {
+		// Add click handlers to all images
+		const images = articleElement.querySelectorAll('img');
+		images.forEach(img => {
+			img.style.cursor = 'pointer';
+			img.addEventListener('click', () => {
+				lightboxSrc = img.src;
+				showLightbox = true;
+			});
+		});
+	});
+
+	function closeLightbox() {
+		showLightbox = false;
+	}
+</script>
+
+<article bind:this={articleElement}>
+	<div>{@html post.content}</div>
+	<!-- <small>Published: {new Date(post.created).toLocaleDateString()}</small> -->
+</article>
+
+{#if showLightbox}
+	<div class="lightbox" on:click={closeLightbox}>
+		<img src={lightboxSrc} alt="" />
+	</div>
+{/if}
+
+
+  <style>
+        article {
+                margin-bottom: 4rem;
+                padding-bottom: 4rem;
+                position: relative;
+				/* text-align: center; */
+        }
+
+        article::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50%;
+                height: 2px;
+                background: #000;
+        }
+
+        article:last-of-type::after {
+                display: none;
+        }
+
+        article :global(p),
+        article :global(img),
+        article :global(ul),
+        article :global(ol),
+        article :global(blockquote),
+        article :global(center) {
+                margin-bottom: 1rem;
+        }
+
+        article :global(p:last-child),
+        article :global(img:last-child),
+        article :global(ul:last-child),
+        article :global(ol:last-child),
+        article :global(blockquote:last-child),
+        article :global(center:last-child) {
+                margin-bottom: 0;
+        }
+
+        small {
+                color: #666;
+        }
+
+        .lightbox {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background-color: rgba(0, 0, 0, 0.9);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                cursor: pointer;
+        }
+
+        .lightbox img {
+                max-width: 95%;
+                max-height: 95vh;
+                border: none;
+                margin: 0;
+        }
+  </style>

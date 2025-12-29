@@ -1,0 +1,5 @@
+# Disallow admin pages from crawling
+User-agent: *
+Disallow: /post
+Disallow: /api
+Disallow: /uploads

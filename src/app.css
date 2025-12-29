@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	html {
+		height: 100%;
+	}
+
+	body {
+		min-height: 100vh;
+		margin: 0;
+		background-color: #fffd8f;
+		color: #000;
+	}
+
+	a {
+		color: #1abcc0;
+	}
+
+	button {
+		background-color: #8479ce;
+		color: white;
+		border: 1px solid black;
+		border-radius: 0;
+		padding: 0.5rem 1rem;
+		cursor: pointer;
+	}
+
+	button:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	input,
+	textarea {
+		border: 1px solid black;
+		padding: 0.5rem;
+	}
+
+	img {
+		max-height: 300px;
+		border: 3px solid #8479ce;
+		margin-bottom: 1rem;
+	}
+
+	p {
+		margin-bottom: 1rem;
+	}
+
+	ul,
+	ol {
+		margin-bottom: 1rem;
+	}
+
+	center {
+		margin-bottom: 1rem;
+	}
+
+	blockquote {
+		margin-bottom: 1rem;
+		border-left: 3px solid #ffa9ab;
+		padding-left: 1rem;
+	}
+}
