@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync, writeFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
+import { env } from '$env/dynamic/private';
 
 const POSTS_DIR = 'src/posts';
 
@@ -67,7 +68,5 @@ export function savePost(post) {
 }
 
 export function verifyAuth(username, password) {
-	const CMS_USERNAME = process.env.CMS_USERNAME || 'admin';
-	const CMS_PASSWORD = process.env.CMS_PASSWORD || 'admin';
-	return username === CMS_USERNAME && password === CMS_PASSWORD;
+	return username === env.CMS_USERNAME && password === env.CMS_PASSWORD;
 }

@@ -2,6 +2,7 @@ import { json } from '@sveltejs/kit';
 import { verifyAuth } from '$lib/posts.js';
 import { put } from '@vercel/blob';
 import sharp from 'sharp';
+import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 
 export async function POST({ request }) {
 	try {
@@ -23,6 +24,10 @@ export async function POST({ request }) {
 			return json({ error: 'Only image files are accepted' }, { status: 400 });
 		}
 
+		if (!BLOB_READ_WRITE_TOKEN) {
+			return json({ error: 'Blob storage not configured' }, { status: 500 });
+		}
+
 		const timestamp = Date.now();
 		const extension = file.name.split('.').pop();
 		const rawFilename = `raw/${timestamp}.${extension}`;
@@ -34,7 +39,8 @@ export async function POST({ request }) {
 		// Upload raw version to Vercel Blob
 		const rawBlob = await put(rawFilename, buffer, {
 			access: 'public',
-			contentType: file.type
+			contentType: file.type,
+			token: BLOB_READ_WRITE_TOKEN
 		});
 
 		// Process image with Sharp
@@ -50,7 +56,8 @@ export async function POST({ request }) {
 		const processedFilename = `${timestamp}.webp`;
 		const processedBlob = await put(processedFilename, processedBuffer, {
 			access: 'public',
-			contentType: 'image/webp'
+			contentType: 'image/webp',
+			token: BLOB_READ_WRITE_TOKEN
 		});
 
 		return json({
