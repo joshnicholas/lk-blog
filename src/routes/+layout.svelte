@@ -11,6 +11,7 @@
 	<title>Josh Nicholas</title>
 	<meta name="description" content="Josh Nicholas is a journalist and scribbler" />
 	<meta name="keywords" content="Josh Nicholas,data journalist,interactive journalist,watercolour,scribble and wash,drawing,sketching,interactive artist,visual journalist,data visualization,scribbles,scribbler,Guardian,Guardian Australia,The Guardian,2ser,The Wire,The Conversation">
+	<link rel="alternate" type="application/rss+xml" title="Josh Nicholas RSS Feed" href="/rss.xml" />
 </svelte:head>
 
 <div class='p-5'>
