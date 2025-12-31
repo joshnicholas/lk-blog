@@ -4,7 +4,7 @@ export const prerender = true;
 
 export async function GET() {
 	const posts = getAllPosts();
-	const siteUrl = 'https://joshnicholas.com'; // Update this to your actual domain
+	const siteUrl = 'https://joshnicholas.com';
 	const siteTitle = 'Josh Nicholas';
 	const siteDescription = 'Josh Nicholas is a journalist and scribbler';
 
