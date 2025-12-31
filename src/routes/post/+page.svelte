@@ -1,8 +1,10 @@
 <script>
 	import { onMount } from 'svelte';
 	import { createPostId } from '$lib/utils.js';
+	import { marked } from 'marked';
 
 	let posts = [];
+	let header = '';
 	let content = '';
 	let username = '';
 	let password = '';
@@ -32,31 +34,44 @@
 		const selectedText = content.substring(start, end);
 
 		let insertion = '';
-		if (tag === 'a') {
-			insertion = `<a href="" target="_blank">${selectedText}</a>`;
-		} else if (tag === 'ul') {
-			insertion = `<ul>\n\t<li>${selectedText}</li>\n</ul>`;
-		} else if (tag === 'center') {
-			insertion = `<center>${selectedText}</center>`;
+		let cursorOffset = 0;
+
+		if (tag === 'b') {
+			insertion = `**${selectedText}**`;
+			cursorOffset = selectedText ? insertion.length : 2; // Place cursor between ** if no selection
+		} else if (tag === 'i') {
+			insertion = `*${selectedText}*`;
+			cursorOffset = selectedText ? insertion.length : 1; // Place cursor between * if no selection
+		} else if (tag === 'a') {
+			insertion = `[${selectedText}]()`;
+			cursorOffset = selectedText ? selectedText.length + 3 : 1; // Inside []
 		} else if (tag === 's') {
-			insertion = `<s>${selectedText}</s>`;
-		} else if (tag === 'li') {
-			insertion = `<li>${selectedText}</li>`;
+			insertion = `~~${selectedText}~~`;
+			cursorOffset = selectedText ? insertion.length : 2; // Place cursor between ~~
 		} else if (tag === 'blockquote') {
-			insertion = `<blockquote>${selectedText}</blockquote>`;
-		} else {
-			insertion = `<${tag}>${selectedText}</${tag}>`;
+			insertion = `> ${selectedText}`;
+			cursorOffset = insertion.length;
+		} else if (tag === 'li') {
+			insertion = `- ${selectedText}`;
+			cursorOffset = insertion.length;
+		} else if (tag === 'center') {
+			// Center doesn't have markdown equivalent, use HTML
+			insertion = `<center>${selectedText}</center>`;
+			cursorOffset = selectedText ? insertion.length : 8;
+		} else if (tag === 'ul') {
+			insertion = `- ${selectedText}`;
+			cursorOffset = insertion.length;
+		} else if (tag === 'p') {
+			// Just add blank line before/after (markdown paragraph)
+			insertion = `\n${selectedText}\n`;
+			cursorOffset = insertion.length - 1;
 		}
 
 		content = content.substring(0, start) + insertion + content.substring(end);
 
 		// Set cursor position after insertion
 		setTimeout(() => {
-			if (tag === 'a') {
-				textarea.setSelectionRange(start + 9, start + 9); // Inside href=""
-			} else {
-				textarea.setSelectionRange(start + insertion.length, start + insertion.length);
-			}
+			textarea.setSelectionRange(start + cursorOffset, start + cursorOffset);
 			textarea.focus();
 		}, 0);
 	}
@@ -73,19 +88,24 @@
 		}
 	}
 
-	function wrapParagraphs(html) {
-		// Split by newlines and process each line
-		const lines = html.split('\n');
-		const processed = lines.map(line => {
-			const trimmed = line.trim();
-			// If line is empty or already starts with a tag, keep as-is
-			if (!trimmed || trimmed.startsWith('<')) {
-				return line;
-			}
-			// Otherwise wrap in <p> tag
-			return `<p>${line}</p>`;
-		});
-		return processed.join('\n');
+	function processContent(content, headerText) {
+		let processedBody = '';
+
+		// Check if content is already HTML (contains HTML tags)
+		if (content.trim().startsWith('<')) {
+			// Already HTML, return as-is
+			processedBody = content;
+		} else {
+			// Otherwise parse as markdown
+			processedBody = marked.parse(content, { breaks: true });
+		}
+
+		// Prepend header if it exists
+		if (headerText && headerText.trim()) {
+			return `<p class="header">${headerText.trim()}</p>\n${processedBody}`;
+		}
+
+		return processedBody;
 	}
 
 	function detectTags(html) {
@@ -107,9 +127,9 @@
 		}
 
 		loading = true;
-		gitStatus = 'Saving and pushing to git...';
+		gitStatus = 'Saving...';
 
-		const processedContent = wrapParagraphs(content);
+		const processedContent = processContent(content, header);
 		const postTags = detectTags(processedContent);
 
 		const post = {
@@ -133,13 +153,14 @@
 			const result = await response.json();
 
 			if (response.ok) {
+				header = '';
 				content = '';
 				tags = '';
 
-				if (result.gitPushed) {
-					gitStatus = 'Saved and pushed! Vercel will rebuild shortly.';
+				if (result.method === 'github-api') {
+					gitStatus = 'Saved! Site will rebuild shortly.';
 				} else {
-					gitStatus = 'Saved locally, but git push failed. Check console.';
+					gitStatus = 'Saved! Remember to commit and push.';
 				}
 
 				await loadPosts();
@@ -278,12 +299,15 @@
 
 		<form on:submit|preventDefault={addPost}>
 			<div class="mb-4">
-				<!-- <label for="content" class="block mb-2">Content (HTML):</label> -->
-				<textarea id="content" bind:value={content} required disabled={loading} class="w-full" style="height: 400px; resize: none; overflow-y: auto;"></textarea>
+				<input type="text" id="header" bind:value={header} disabled={loading} class="w-full" placeholder="Header..." />
 			</div>
 			<div class="mb-4">
-				<label for="tags" class="block mb-2">Tags (comma-separated, auto-detected: image, quote, link):</label>
-				<input type="text" id="tags" bind:value={tags} disabled={loading} class="w-full" placeholder="Optional manual tags" />
+				<!-- <label for="content" class="block mb-2">Content (Markdown or HTML):</label> -->
+				<textarea id="content" bind:value={content} required disabled={loading} class="w-full" style="height: 300px; resize: none; overflow-y: auto;" placeholder="Main text..."></textarea>
+			</div>
+			<div class="mb-4">
+				<!-- <label for="tags" class="block mb-2">Tags (comma-separated, auto-detected: image, quote, link):</label> -->
+				<input type="text" id="tags" bind:value={tags} disabled={loading} class="w-full" placeholder="Tags..." />
 			</div>
 			<div class="flex gap-4 mb-4">
 				<div class="flex-1">
