@@ -15,11 +15,14 @@
 	}
 
 	a {
-		color: #1abcc0;
+		color: #8F91FF;
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+		font-weight: 600;
 	}
 
 	button {
-		background-color: #8479ce;
+		background-color: #8F91FF;
 		color: white;
 		border: 1px solid black;
 		border-radius: 0;
@@ -47,7 +50,7 @@
 
 	img {
 		max-height: 300px;
-		border: 3px solid #8479ce;
+		border: 5px solid #8F91FF;
 		margin-bottom: 1rem;
 	}
 
@@ -71,7 +74,7 @@
 
 	blockquote {
 		margin-bottom: 1rem;
-		border-left: 3px solid #ffa9ab;
+		border-left: 3px solid #FF8FC9;
 		padding-left: 1rem;
 		font-style:italic;
 	}

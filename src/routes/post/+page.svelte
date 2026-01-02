@@ -240,7 +240,7 @@
 	}
 
 	.file-input::file-selector-button {
-		background-color: #8479ce;
+		background-color: #8F91FF;
 		color: white;
 		border: 1px solid black;
 		border-radius: 0;

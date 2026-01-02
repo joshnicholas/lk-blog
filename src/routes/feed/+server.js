@@ -14,7 +14,7 @@ export async function GET() {
 	<title>${siteTitle}</title>
 	<description>${siteDescription}</description>
 	<link>${siteUrl}</link>
-	<atom:link href="${siteUrl}/rss.xml" rel="self" type="application/rss+xml"/>
+	<atom:link href="${siteUrl}/feed" rel="self" type="application/rss+xml"/>
 	${posts.map(post => {
 		// Extract first 150 chars of content for description
 		const textContent = post.content.replace(/<[^>]*>/g, '').substring(0, 150);
@@ -27,8 +27,8 @@ export async function GET() {
 	<item>
 		<title><![CDATA[${title}]]></title>
 		<description><![CDATA[${textContent}...]]></description>
-		<link>${siteUrl}/#${post.slug}</link>
-		<guid isPermaLink="false">${post.id}</guid>
+		<link>${siteUrl}/${post.slug}</link>
+		<guid isPermaLink="true">${siteUrl}/${post.slug}</guid>
 		<pubDate>${new Date(post.created).toUTCString()}</pubDate>
 		<content:encoded><![CDATA[${post.content}]]></content:encoded>
 	</item>`;

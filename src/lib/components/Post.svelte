@@ -6,6 +6,15 @@
 	let lightboxSrc = $state('');
 	let articleElement;
 
+	function formatDate(dateString) {
+		const date = new Date(dateString);
+		const day = date.getDate(); // No leading zero
+		const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+			'July', 'August', 'September', 'October', 'November', 'December'];
+		const month = monthNames[date.getMonth()];
+		return `${day} ${month}`;
+	}
+
 	onMount(() => {
 		// Add click handlers to all images
 		const images = articleElement.querySelectorAll('img');
@@ -25,7 +34,9 @@
 
 <article bind:this={articleElement}>
 	<div>{@html post.content}</div>
-	<!-- <small>Published: {new Date(post.created).toLocaleDateString()}</small> -->
+	<div class="date-wrapper">
+		<small class="post-date">{formatDate(post.created)}</small>
+	</div>
 </article>
 
 {#if showLightbox}
@@ -38,7 +49,7 @@
   <style>
         article {
                 margin-bottom: 4rem;
-                padding-bottom: 4rem;
+                padding-bottom: 2rem;
                 position: relative;
 				/* text-align: center; */
         }
@@ -76,8 +87,14 @@
                 margin-bottom: 0;
         }
 
-        small {
-                color: #666;
+        .date-wrapper {
+                text-align: center;
+                margin-top: 1rem;
+        }
+
+        .post-date {
+                color: #FF8FC9;
+                font-weight: bold;
         }
 
         .lightbox {

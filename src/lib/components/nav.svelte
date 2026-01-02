@@ -22,6 +22,9 @@
         <li class="mr-0">
             <a href='https://www.theguardian.com/profile/josh-nicholas' target='_blank' rel="me">guardian⤴</a>
         </li>
+        <li class="mr-0">
+            <a href='/feed'>rss</a>
+        </li>
         <!-- <li class="mr-0">
             <a href='https://www.instagram.com/joshcnicholas' target='_blank' rel="me">insta⤴</a>
         </li> -->
@@ -35,5 +38,7 @@
     } */
 
     a {
-    color: black !important;}
+    color: black !important;
+    text-decoration: none !important;
+}
 </style>

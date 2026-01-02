@@ -31,11 +31,20 @@
 	.page-container {
 		display: flex;
 		flex-direction: column;
-		min-height: 100%;
+		min-height: calc(100vh - 2.5rem - 40px);
 	}
 
 	.posts-content {
 		flex: 1;
+		padding-top: 2em;
+	}
+
+	.pagination-top {
+		padding-bottom: 20px;
+	}
+
+	.pagination-bottom {
+		margin-top: auto;
 	}
 </style>
 
@@ -43,23 +52,29 @@
 	<p>No posts yet. Check back soon!</p>
 {:else}
 	<div class="page-container">
-	<div class="flex justify-between" style="padding-bottom: 20px;">
-		<button
-			class="cursor-pointer hover:opacity-70 select-none font-medium"
-			style="background: none; border: none; padding: 0; color: #1abcc0;"
-			on:click={goToPrev}
-			disabled={!hasPrev}
-		>
-			Prev
-		</button>
-		<button
-			class="cursor-pointer hover:opacity-70 select-none font-medium"
-			style="background: none; border: none; padding: 0; color: #1abcc0;"
-			on:click={goToNext}
-			disabled={!hasNext}
-		>
-			Next
-		</button>
+	<div class="pagination-top flex justify-between">
+		{#if hasPrev}
+			<button
+				class="cursor-pointer hover:opacity-70 select-none font-medium"
+				style="background: none; border: none; padding: 0; color: #8F91FF;"
+				on:click={goToPrev}
+			>
+				Prev
+			</button>
+		{:else}
+			<span></span>
+		{/if}
+		{#if hasNext}
+			<button
+				class="cursor-pointer hover:opacity-70 select-none font-medium"
+				style="background: none; border: none; padding: 0; color: #8F91FF;"
+				on:click={goToNext}
+			>
+				Next
+			</button>
+		{:else}
+			<span></span>
+		{/if}
 	</div>
 
 	<div class="posts-content">
@@ -68,23 +83,29 @@
 		{/each}
 	</div>
 
-	<div class="flex justify-between">
-		<button
-			class="cursor-pointer hover:opacity-70 select-none font-medium"
-			style="background: none; border: none; padding: 0; color: #1abcc0;"
-			on:click={goToPrev}
-			disabled={!hasPrev}
-		>
-			Prev
-		</button>
-		<button
-			class="cursor-pointer hover:opacity-70 select-none font-medium"
-			style="background: none; border: none; padding: 0; color: #1abcc0;"
-			on:click={goToNext}
-			disabled={!hasNext}
-		>
-			Next
-		</button>
+	<div class="pagination-bottom flex justify-between">
+		{#if hasPrev}
+			<button
+				class="cursor-pointer hover:opacity-70 select-none font-medium"
+				style="background: none; border: none; padding: 0; color: #8F91FF;"
+				on:click={goToPrev}
+			>
+				Prev
+			</button>
+		{:else}
+			<span></span>
+		{/if}
+		{#if hasNext}
+			<button
+				class="cursor-pointer hover:opacity-70 select-none font-medium"
+				style="background: none; border: none; padding: 0; color: #8F91FF;"
+				on:click={goToNext}
+			>
+				Next
+			</button>
+		{:else}
+			<span></span>
+		{/if}
 	</div>
 	</div>
 {/if}
