@@ -93,7 +93,7 @@
         }
 
         .post-date {
-                color: #FF8FC9;
+                color: #FD8FFF;
                 font-weight: bold;
         }
 
