@@ -22,13 +22,13 @@
         <li class="mr-0">
             <a href='https://www.theguardian.com/profile/josh-nicholas' target='_blank' rel="me">guardian⤴</a>
         </li>
-        <li class="mr-0">
-            <a href='/feed'>rss</a>
-        </li>
         <!-- <li class="mr-0">
             <a href='https://www.instagram.com/joshcnicholas' target='_blank' rel="me">insta⤴</a>
         </li> -->
     </ul>
+</div>
+<div class='mt-4'>
+    <a href='/feed'>rss</a>
 </div>
 </div>
 

@@ -54,21 +54,6 @@
 				/* text-align: center; */
         }
 
-        article::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 50%;
-                height: 2px;
-                background: #000;
-        }
-
-        article:last-of-type::after {
-                display: none;
-        }
-
         article :global(p),
         article :global(img),
         article :global(ul),
@@ -90,11 +75,6 @@
         .date-wrapper {
                 text-align: center;
                 margin-top: 1rem;
-        }
-
-        .post-date {
-                color: #FD8FFF;
-                font-weight: bold;
         }
 
         .lightbox {

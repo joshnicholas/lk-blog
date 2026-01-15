@@ -10,19 +10,19 @@
 	body {
 		min-height: 100vh;
 		margin: 0;
-		background-color: #fffd8f;
+		background-color: #FF9B76;
 		color: #000;
 	}
 
 	a {
-		color: #8F91FF;
+		color: #FFD9A8;
 		text-decoration: underline;
 		text-underline-offset: 0.2em;
 		font-weight: 600;
 	}
 
 	button {
-		background-color: #8F91FF;
+		background-color: #FF9B76;
 		color: white;
 		border: 1px solid black;
 		border-radius: 0;
@@ -74,8 +74,137 @@
 
 	blockquote {
 		margin-bottom: 1rem;
-		border-left: 3px solid #FD8FFF;
+		border-left: 3px solid #FFD9A8;
 		padding-left: 1rem;
 		font-style:italic;
+	}
+
+	hr {
+		border: none;
+		height: 3px;
+		background-color: #FFD9A8;
+		margin: 2rem 0;
+	}
+
+	article::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 50%;
+		height: 3px;
+		background: #FFD9A8;
+	}
+
+	article:last-of-type::after {
+		display: none;
+	}
+
+	.index-slider {
+		border-color: #FFD9A8;
+	}
+
+	.index-slider::-webkit-slider-thumb {
+		appearance: none;
+		width: 25px;
+		height: 25px;
+		border-radius: 50%;
+		background: #FFD9A8;
+		cursor: pointer;
+	}
+
+	.index-slider::-moz-range-thumb {
+		width: 25px;
+		height: 25px;
+		border-radius: 50%;
+		background: #FFD9A8;
+		cursor: pointer;
+		border: none;
+	}
+
+	button.slider-button {
+		color: #FFD9A8 !important;
+		background: none !important;
+		border: none !important;
+		cursor: pointer;
+		font-weight: 500;
+		padding: 0;
+		text-decoration: underline;
+	}
+
+	button.slider-button:disabled {
+		opacity: 0.3;
+		cursor: not-allowed;
+	}
+
+	.post-date {
+		color: #000;
+		font-weight: bold;
+		font-size: 0.875em;
+	}
+
+	input[type="file"]::file-selector-button {
+		background-color: #FF9B76;
+		color: white;
+		border: 1px solid black;
+		border-radius: 0;
+		padding: 0.5rem 1rem;
+		cursor: pointer;
+		font-size: 1rem;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		body {
+			background-color: #000;
+			color: #fff;
+		}
+
+		a {
+			color: #A9D8F8;
+		}
+
+		button {
+			background-color: #000;
+			color: white;
+			border: 1px solid #fff;
+		}
+
+		input,
+		textarea {
+			border: 1px solid #fff;
+			background-color: #000;
+			color: #fff;
+		}
+
+		input:focus,
+		textarea:focus {
+			border: 1px solid #fff;
+		}
+
+		img {
+			border: 5px solid #A9D8F8;
+		}
+
+		.post-date {
+			color: #fff;
+		}
+
+		input[type="file"]::file-selector-button {
+			background-color: #000;
+			border: 1px solid #fff;
+		}
+
+		blockquote {
+			border-left: 3px solid #FFD9A8;
+		}
+
+		hr {
+			background-color: #FFD9A8;
+		}
+
+		article::after {
+			background: #FFD9A8;
+		}
 	}
 }

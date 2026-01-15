@@ -239,16 +239,6 @@
 		font-size: 0;
 	}
 
-	.file-input::file-selector-button {
-		background-color: #8F91FF;
-		color: white;
-		border: 1px solid black;
-		border-radius: 0;
-		padding: 0.5rem 1rem;
-		cursor: pointer;
-		font-size: 1rem;
-	}
-
 	.tag-shortcut {
 		background: none;
 		border: none;

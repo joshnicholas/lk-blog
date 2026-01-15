@@ -55,8 +55,7 @@
 	<div class="pagination-top flex justify-between">
 		{#if hasPrev}
 			<button
-				class="cursor-pointer hover:opacity-70 select-none font-medium"
-				style="background: none; border: none; padding: 0; color: #8F91FF;"
+				class="slider-button"
 				on:click={goToPrev}
 			>
 				Prev
@@ -66,8 +65,7 @@
 		{/if}
 		{#if hasNext}
 			<button
-				class="cursor-pointer hover:opacity-70 select-none font-medium"
-				style="background: none; border: none; padding: 0; color: #8F91FF;"
+				class="slider-button"
 				on:click={goToNext}
 			>
 				Next
@@ -86,8 +84,7 @@
 	<div class="pagination-bottom flex justify-between">
 		{#if hasPrev}
 			<button
-				class="cursor-pointer hover:opacity-70 select-none font-medium"
-				style="background: none; border: none; padding: 0; color: #8F91FF;"
+				class="slider-button"
 				on:click={goToPrev}
 			>
 				Prev
@@ -97,8 +94,7 @@
 		{/if}
 		{#if hasNext}
 			<button
-				class="cursor-pointer hover:opacity-70 select-none font-medium"
-				style="background: none; border: none; padding: 0; color: #8F91FF;"
+				class="slider-button"
 				on:click={goToNext}
 			>
 				Next
