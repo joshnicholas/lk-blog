@@ -18,7 +18,7 @@
 		color: #FFD9A8;
 		text-decoration: underline;
 		text-underline-offset: 0.2em;
-		font-weight: 600;
+		font-weight: 700;
 	}
 
 	button {
@@ -49,8 +49,8 @@
 	}
 
 	img {
-		max-height: 300px;
-		border: 5px solid #8F91FF;
+		/* max-height: 300px; */
+		border: 5px solid #FFD9A8;
 		margin-bottom: 1rem;
 	}
 

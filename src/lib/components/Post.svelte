@@ -1,10 +1,5 @@
 <script>
-	import { onMount } from 'svelte';
-
 	let { post } = $props();
-	let showLightbox = $state(false);
-	let lightboxSrc = $state('');
-	let articleElement;
 
 	function formatDate(dateString) {
 		const date = new Date(dateString);
@@ -14,36 +9,14 @@
 		const month = monthNames[date.getMonth()];
 		return `${day} ${month}`;
 	}
-
-	onMount(() => {
-		// Add click handlers to all images
-		const images = articleElement.querySelectorAll('img');
-		images.forEach(img => {
-			img.style.cursor = 'pointer';
-			img.addEventListener('click', () => {
-				lightboxSrc = img.src;
-				showLightbox = true;
-			});
-		});
-	});
-
-	function closeLightbox() {
-		showLightbox = false;
-	}
 </script>
 
-<article bind:this={articleElement}>
+<article>
 	<div>{@html post.content}</div>
 	<div class="date-wrapper">
 		<small class="post-date">{formatDate(post.created)}</small>
 	</div>
 </article>
-
-{#if showLightbox}
-	<div class="lightbox" on:click={closeLightbox}>
-		<img src={lightboxSrc} alt="" />
-	</div>
-{/if}
 
 
   <style>
@@ -77,24 +50,4 @@
                 margin-top: 1rem;
         }
 
-        .lightbox {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                background-color: rgba(0, 0, 0, 0.9);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 9999;
-                cursor: pointer;
-        }
-
-        .lightbox img {
-                max-width: 95%;
-                max-height: 95vh;
-                border: none;
-                margin: 0;
-        }
   </style>

@@ -1,9 +1,9 @@
-import { getAllPosts } from '$lib/posts.js';
+import { getRecentPosts } from '$lib/posts.js';
 
 export const prerender = true;
 
 export async function GET() {
-	const posts = getAllPosts();
+	const posts = getRecentPosts(8);
 	const siteUrl = 'https://joshnicholas.com';
 	const siteTitle = 'Josh Nicholas';
 	const siteDescription = 'Josh Nicholas is a journalist and scribbler';
