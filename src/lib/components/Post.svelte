@@ -1,5 +1,5 @@
 <script>
-	let { post } = $props();
+	let { post, isLast = false } = $props();
 
 	function formatDate(dateString) {
 		const date = new Date(dateString);
@@ -11,7 +11,7 @@
 	}
 </script>
 
-<article>
+<article class:fade-out={isLast}>
 	<div>{@html post.content}</div>
 	<div class="date-wrapper">
 		<small class="post-date">{formatDate(post.created)}</small>
@@ -25,6 +25,14 @@
                 padding-bottom: 2rem;
                 position: relative;
 				/* text-align: center; */
+        }
+
+        article.fade-out {
+                max-height: 15rem;
+                overflow: hidden;
+                margin-bottom: 0;
+                mask-image: linear-gradient(to bottom, black 10%, transparent 100%);
+                -webkit-mask-image: linear-gradient(to bottom, black 10%, transparent 100%);
         }
 
         article :global(p),

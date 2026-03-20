@@ -8,8 +8,8 @@
 	<p>No posts yet. Check back soon!</p>
 {:else}
 	<div style="padding-top: 2em;">
-		{#each data.posts as post}
-			<Post {post} />
+		{#each data.posts as post, i}
+			<Post {post} isLast={i === data.posts.length - 1} />
 		{/each}
 	</div>
 {/if}

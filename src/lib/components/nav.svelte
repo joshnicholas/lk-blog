@@ -38,7 +38,13 @@
     } */
 
     a {
-    color: black !important;
-    text-decoration: none !important;
-}
+        color: black !important;
+        text-decoration: none !important;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        a {
+            color: white !important;
+        }
+    }
 </style>
