@@ -5,6 +5,9 @@
 </script>
 
 <div class='text-center'>
+<div class='mt-4'>
+    <a href='/feed'>rss</a>
+</div>
 <div id='navblock' class='block' style={csso}>
     <ul id='navynav' class='space-x-6 flex justify-center text-l font-semibold'>
         <li class="mr-0">
@@ -27,9 +30,9 @@
         </li> -->
     </ul>
 </div>
-<div class='mt-4'>
+<!-- <div class='mt-4'>
     <a href='/feed'>rss</a>
-</div>
+</div> -->
 </div>
 
 <style>
