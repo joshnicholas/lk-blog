@@ -21,6 +21,10 @@
 		font-weight: 700;
 	}
 
+	.boldy {
+		font-weight:bold;
+	}
+
 	button {
 		background-color: #FF9B76;
 		color: white;
