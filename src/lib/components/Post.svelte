@@ -24,7 +24,7 @@
                 margin-bottom: 4rem;
                 padding-bottom: 2rem;
                 position: relative;
-				/* text-align: center; */
+				text-align: center;
         }
 
         article.fade-out {
@@ -33,6 +33,17 @@
                 margin-bottom: 0;
                 mask-image: linear-gradient(to bottom, black 10%, transparent 100%);
                 -webkit-mask-image: linear-gradient(to bottom, black 10%, transparent 100%);
+        }
+
+        article :global(p) {
+                text-align: justify;
+        }
+
+        article :global(p.boldy),
+        article :global(p.header),
+        article :global(.boldy),
+        article :global(.header) {
+                text-align: center;
         }
 
         article :global(p),

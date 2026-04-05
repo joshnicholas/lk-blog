@@ -4,6 +4,6 @@ export const prerender = true;
 
 export function load() {
 	return {
-		posts: getRecentPosts(8)
+		posts: getRecentPosts(4)
 	};
 }

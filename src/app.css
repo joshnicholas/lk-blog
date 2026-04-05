@@ -10,7 +10,7 @@
 	body {
 		min-height: 100vh;
 		margin: 0;
-		background-color: #FF9B76;
+		background-color: #e67d4e;
 		color: #000;
 	}
 
@@ -23,10 +23,11 @@
 
 	.boldy {
 		font-weight:bold;
+		text-align: center;
 	}
 
 	button {
-		background-color: #FF9B76;
+		background-color: #ffb452;
 		color: white;
 		border: 1px solid black;
 		border-radius: 0;
@@ -56,6 +57,9 @@
 		/* max-height: 300px; */
 		border: 5px solid #FFD9A8;
 		margin-bottom: 1rem;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
 	}
 
 	p {
@@ -65,6 +69,7 @@
 	.header {
 		font-weight: bold;
 		margin-bottom: 1em;
+		text-align: center;
 	}
 
 	ul,
