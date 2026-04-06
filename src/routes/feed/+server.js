@@ -4,7 +4,7 @@ export const prerender = true;
 
 export async function GET() {
 	const posts = getRecentPosts(8);
-	const siteUrl = 'https://joshnicholas.com';
+	const siteUrl = 'https://joshnicholas.blog';
 	const siteTitle = 'Josh Nicholas';
 	const siteDescription = 'Josh Nicholas is a journalist and scribbler';
 
