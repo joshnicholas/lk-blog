@@ -24,7 +24,7 @@
                 margin-bottom: 4rem;
                 padding-bottom: 2rem;
                 position: relative;
-				text-align: center;
+				text-align: justify;
         }
 
         article.fade-out {

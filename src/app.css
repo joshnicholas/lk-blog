@@ -75,6 +75,15 @@
 	ul,
 	ol {
 		margin-bottom: 1rem;
+		padding-left: 1.5rem;
+	}
+
+	ul {
+		list-style-type: disc;
+	}
+
+	ul li::marker {
+		color: #FFD9A8;
 	}
 
 	center {
