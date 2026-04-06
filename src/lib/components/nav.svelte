@@ -45,6 +45,11 @@
         text-decoration: none !important;
     }
 
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
     @media (prefers-color-scheme: dark) {
         a {
             color: white !important;
