@@ -1,7 +1,6 @@
-import { readdirSync, readFileSync, writeFileSync, existsSync } from 'fs';
+import { readdirSync, readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
-import { env } from '$env/dynamic/private';
 
 const POSTS_DIR = 'src/posts';
 
@@ -61,25 +60,4 @@ export function getPostBySlug(slug) {
 		slug,
 		tags: data.tags || ''
 	};
-}
-
-export function savePost(post) {
-	const slug = post.slug || post.id;
-	const filePath = join(POSTS_DIR, `${slug}.html`);
-
-	const frontmatter = {
-		id: post.id,
-		created: post.created,
-		updated: post.updated,
-		tags: post.tags || ''
-	};
-
-	const fileContent = matter.stringify(post.content, frontmatter);
-	writeFileSync(filePath, fileContent);
-
-	return slug;
-}
-
-export function verifyAuth(username, password) {
-	return username === env.CMS_USERNAME && password === env.CMS_PASSWORD;
 }

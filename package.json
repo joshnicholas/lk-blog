@@ -22,9 +22,5 @@
 		"tailwindcss": "^3.4.19",
 		"vite": "^7.2.6"
 	},
-	"dependencies": {
-		"@vercel/blob": "^2.0.0",
-		"octokit": "^5.0.5",
-		"sharp": "^0.34.5"
-	}
+	"dependencies": {}
 }

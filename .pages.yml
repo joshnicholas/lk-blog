@@ -1,0 +1,43 @@
+media:
+  input: static/uploads
+  output: /uploads
+
+content:
+  - name: posts
+    label: Posts
+    type: collection
+    path: src/posts
+    format: yaml-frontmatter
+    filename: "{day}{month}{year}{hour}{minute}{second}.html"
+    view:
+      primary: created
+      fields: [created, tags]
+      sort: [created]
+      default:
+        sort: created
+        order: desc
+    fields:
+      - name: body
+        label: Content
+        type: rich-text
+        options:
+          format: html
+      - name: tags
+        label: Tags
+        type: string
+      - name: created
+        label: Created
+        type: date
+        options:
+          time: true
+          format: "yyyy-MM-dd'T'HH:mm:ssxxx"
+      - name: updated
+        label: Updated
+        type: date
+        options:
+          time: true
+          format: "yyyy-MM-dd'T'HH:mm:ssxxx"
+      - name: id
+        label: ID
+        type: text
+        hidden: true
