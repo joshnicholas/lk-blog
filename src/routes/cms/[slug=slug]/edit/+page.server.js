@@ -12,8 +12,16 @@ import {
 	splitHeader
 } from '$lib/server/postEditor.js';
 
-function loadPost(slug) {
-	return process.env.VERCEL ? getPostBySlugFromGitHub(slug) : getPostBySlug(slug);
+async function loadPost(slug) {
+	if (!process.env.VERCEL) return getPostBySlug(slug);
+
+	try {
+		return await getPostBySlugFromGitHub(slug);
+	} catch (err) {
+		console.error('Failed to load post from GitHub:', err);
+		const detail = err?.status ? `${err.status} ${err.message}` : err?.message || String(err);
+		throw error(500, `Could not load post from GitHub (${detail}). Check GITHUB_TOKEN, GITHUB_OWNER and GITHUB_REPO in your Vercel project's environment variables.`);
+	}
 }
 
 export async function load({ params }) {

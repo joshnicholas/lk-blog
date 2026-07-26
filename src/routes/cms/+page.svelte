@@ -30,6 +30,10 @@
 		</div>
 	</div>
 
+	{#if data.loadError}
+		<div class="p-2 bg-red-200 text-black">{data.loadError}</div>
+	{/if}
+
 	<div class="flex flex-col gap-3">
 		{#each data.posts as post (post.slug)}
 			<a href="/cms/{post.slug}/edit" class="block post-row p-3 no-underline">
