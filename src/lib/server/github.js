@@ -32,6 +32,33 @@ export async function commitFile(path, content, message) {
 	});
 }
 
+// Lists files in a directory (name + download_url), no content
+export async function listDirectory(path) {
+	const octokit = client();
+	const { data } = await octokit.rest.repos.getContent({
+		owner: env.GITHUB_OWNER,
+		repo: env.GITHUB_REPO,
+		path
+	});
+	return Array.isArray(data) ? data : [];
+}
+
+export async function getFileContent(path) {
+	const octokit = client();
+	try {
+		const { data } = await octokit.rest.repos.getContent({
+			owner: env.GITHUB_OWNER,
+			repo: env.GITHUB_REPO,
+			path
+		});
+		if (Array.isArray(data) || !data.content) throw new Error(`${path} is not a file`);
+		return Buffer.from(data.content, 'base64').toString('utf-8');
+	} catch (err) {
+		if (err.status === 404) return null;
+		throw err;
+	}
+}
+
 export async function deleteFile(path, message) {
 	const octokit = client();
 	const owner = env.GITHUB_OWNER;

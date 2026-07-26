@@ -1,5 +1,6 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 import { getPostBySlug, writePostFileLocally, deletePostFileLocally } from '$lib/posts.js';
+import { getPostBySlugFromGitHub } from '$lib/server/postsRemote.js';
 import { commitFile, deleteFile } from '$lib/server/github.js';
 import {
 	generatePostTimestamp,
@@ -11,8 +12,12 @@ import {
 	splitHeader
 } from '$lib/server/postEditor.js';
 
+function loadPost(slug) {
+	return process.env.VERCEL ? getPostBySlugFromGitHub(slug) : getPostBySlug(slug);
+}
+
 export async function load({ params }) {
-	const post = getPostBySlug(params.slug);
+	const post = await loadPost(params.slug);
 	if (!post) throw error(404, 'Post not found');
 
 	const { header, body } = splitHeader(post.content);
@@ -30,7 +35,7 @@ export const actions = {
 			return fail(400, { error: 'Content is required', header, content: rawContent, tags });
 		}
 
-		const existing = getPostBySlug(params.slug);
+		const existing = await loadPost(params.slug);
 		if (!existing) throw error(404, 'Post not found');
 
 		const { created } = generatePostTimestamp();
