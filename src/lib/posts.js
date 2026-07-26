@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, existsSync } from 'fs';
+import { readdirSync, readFileSync, writeFileSync, unlinkSync, existsSync } from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 
@@ -60,4 +60,14 @@ export function getPostBySlug(slug) {
 		slug,
 		tags: data.tags || ''
 	};
+}
+
+// fileContent must already include YAML frontmatter (see $lib/server/postEditor.js)
+export function writePostFileLocally(slug, fileContent) {
+	writeFileSync(join(POSTS_DIR, `${slug}.html`), fileContent);
+}
+
+export function deletePostFileLocally(slug) {
+	const filePath = join(POSTS_DIR, `${slug}.html`);
+	if (existsSync(filePath)) unlinkSync(filePath);
 }

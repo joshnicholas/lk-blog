@@ -15,12 +15,15 @@
 		"@sveltejs/kit": "^2.49.1",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"autoprefixer": "^10.4.23",
-		"gray-matter": "^4.0.3",
-		"marked": "^17.0.1",
 		"postcss": "^8.5.6",
 		"svelte": "^5.45.6",
 		"tailwindcss": "^3.4.19",
 		"vite": "^7.2.6"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"gray-matter": "^4.0.3",
+		"marked": "^17.0.1",
+		"octokit": "^5.0.5",
+		"sharp": "^0.34.5"
+	}
 }
