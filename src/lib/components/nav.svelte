@@ -29,7 +29,7 @@
             <a href='https://links.joshnicholas.com/rss'>links rss</a>
         </li >
         <li>
-            <a href='/feed'>blog rss</a>
+            <a href='/feed.xml'>blog rss</a>
         </li >
         <!-- <li>
             <a href='https://www.theguardian.com/profile/josh-nicholas' target='_blank' rel="me">guardian⤴</a>
