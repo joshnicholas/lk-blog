@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+	:root {
+		--accent-color: #ffbb95;
+	}
+
 	html {
 		height: 100%;
 	}
@@ -10,12 +14,12 @@
 	body {
 		min-height: 100vh;
 		margin: 0;
-		background-color: #e67d4e;
-		color: #000;
+		background-color: #944700;
+		color: var(--accent-color);
 	}
 
 	a {
-		color: #FFD9A8;
+		color: var(--accent-color);
 		text-decoration: underline;
 		text-underline-offset: 0.2em;
 		font-weight: 700;
@@ -27,7 +31,7 @@
 	}
 
 	button {
-		background-color: #ffb452;
+		background-color: var(--accent-color);
 		color: white;
 		border: 1px solid black;
 		border-radius: 0;
@@ -56,7 +60,7 @@
 	img,
 	video {
 		/* max-height: 300px; */
-		border: 5px solid #FFD9A8;
+		border: 5px solid var(--accent-color);
 		margin-bottom: 1rem;
 		display: block;
 		margin-left: auto;
@@ -84,7 +88,7 @@
 	}
 
 	ul li::marker {
-		color: #FFD9A8;
+		color: var(--accent-color);
 	}
 
 	center {
@@ -93,7 +97,7 @@
 
 	blockquote {
 		margin-bottom: 1rem;
-		border-left: 3px solid #FFD9A8;
+		border-left: 3px solid var(--accent-color);
 		padding-left: 1rem;
 		font-style:italic;
 	}
@@ -101,7 +105,7 @@
 	hr {
 		border: none;
 		height: 3px;
-		background-color: #FFD9A8;
+		background-color: var(--accent-color);
 		margin: 2rem 0;
 	}
 
@@ -113,7 +117,7 @@
 		transform: translateX(-50%);
 		width: 50%;
 		height: 3px;
-		background: #000;
+		background: var(--accent-color);
 	}
 
 	article:last-of-type::after {
@@ -121,7 +125,7 @@
 	}
 
 	.index-slider {
-		border-color: #FFD9A8;
+		border-color: var(--accent-color);
 	}
 
 	.index-slider::-webkit-slider-thumb {
@@ -129,7 +133,7 @@
 		width: 25px;
 		height: 25px;
 		border-radius: 50%;
-		background: #FFD9A8;
+		background: var(--accent-color);
 		cursor: pointer;
 	}
 
@@ -137,13 +141,13 @@
 		width: 25px;
 		height: 25px;
 		border-radius: 50%;
-		background: #FFD9A8;
+		background: var(--accent-color);
 		cursor: pointer;
 		border: none;
 	}
 
 	button.slider-button {
-		color: #FFD9A8 !important;
+		color: var(--accent-color) !important;
 		background: none !important;
 		border: none !important;
 		cursor: pointer;
@@ -158,7 +162,8 @@
 	}
 
 	.post-date {
-		color: #000;
+		color: var(--accent-color);
+		opacity: 0.8;
 		font-weight: bold;
 		font-size: 0.875em;
 	}
@@ -180,7 +185,7 @@
 		}
 
 		a {
-			color: #FFD9A8;
+			color: var(--accent-color);
 		}
 
 		button {
@@ -203,7 +208,7 @@
 
 		img,
 		video {
-			border: 5px solid #FFD9A8;
+			border: 5px solid var(--accent-color);
 		}
 
 		.post-date {
@@ -216,15 +221,15 @@
 		}
 
 		blockquote {
-			border-left: 3px solid #FFD9A8;
+			border-left: 3px solid var(--accent-color);
 		}
 
 		hr {
-			background-color: #FFD9A8;
+			background-color: var(--accent-color);
 		}
 
 		article::after {
-			background: #FFD9A8;
+			background: var(--accent-color);
 		}
 	}
 }

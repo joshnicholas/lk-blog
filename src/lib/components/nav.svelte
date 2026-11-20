@@ -11,7 +11,7 @@
             <a rel="me" href='https://joshnicholas.com/'>scribbles</a>
         </li >
         <li>
-            <a href='https://links.joshnicholas.com/'>linklog</a>
+            <a href='https://links.joshnicholas.com/'>links</a>
         </li >
         <li>
             <a href='/'>blog</a>
@@ -26,11 +26,11 @@
             <a rel="me" href='https://joshnicholas.com/about'>about</a>
         </li >
         <li>
-            <a href='https://links.joshnicholas.com/rss'>links rss</a>
+            <!-- <a href='https://links.joshnicholas.com/rss'>links rss</a>
         </li >
         <li>
             <a href='/feed.xml'>blog rss</a>
-        </li >
+        </li > -->
         <!-- <li>
             <a href='https://www.theguardian.com/profile/josh-nicholas' target='_blank' rel="me">guardian⤴</a>
         </li> -->
@@ -63,13 +63,7 @@
     }
 
     a {
-        color: black !important;
+        color: var(--accent-color) !important;
         text-decoration: none !important;
-    }
-
-    @media (prefers-color-scheme: dark) {
-        a {
-            color: white !important;
-        }
     }
 </style>
