@@ -1,4 +1,4 @@
-import { getRecentPosts } from '$lib/posts.js';
+import { getRecentPosts, getPostTitle, getPostDescription } from '$lib/posts.js';
 
 export const prerender = true;
 
@@ -16,12 +16,8 @@ export async function GET() {
 	<link>${siteUrl}</link>
 	<atom:link href="${siteUrl}/feed.xml" rel="self" type="application/rss+xml"/>
 	${posts.map(post => {
-		// Extract first 150 chars of content for description
-		const textContent = post.content.replace(/<[^>]*>/g, '').substring(0, 150);
-		// Use header as title if it exists, otherwise use first line of content
-		const title = post.content.match(/<p class="header">(.*?)<\/p>/)?.[1]
-			|| textContent.substring(0, 50)
-			|| post.id;
+		const title = getPostTitle(post);
+		const textContent = getPostDescription(post);
 
 		return `
 	<item>

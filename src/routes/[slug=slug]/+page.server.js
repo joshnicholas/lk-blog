@@ -1,4 +1,4 @@
-import { getPostBySlug, getAllPosts } from '$lib/posts.js';
+import { getPostBySlug, getAllPosts, getPostTitle, getPostDescription } from '$lib/posts.js';
 import { error } from '@sveltejs/kit';
 
 export const prerender = true;
@@ -18,6 +18,8 @@ export async function load({ params }) {
 	}
 
 	return {
-		post
+		post,
+		title: getPostTitle(post),
+		description: getPostDescription(post)
 	};
 }

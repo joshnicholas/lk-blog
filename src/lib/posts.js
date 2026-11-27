@@ -26,6 +26,18 @@ export function filenameToDate(filename) {
 	return new Date(`${yyyy}-${mm}-${dd}T${hh}:${min}:${ss}`);
 }
 
+// Posts have no dedicated title field — derive one from the "header" class
+// paragraph if present, falling back to the start of the plain-text content.
+export function getPostTitle(post) {
+	return post.content.match(/<p class="header">(.*?)<\/p>/)?.[1]
+		|| post.content.replace(/<[^>]*>/g, '').trim().substring(0, 50)
+		|| post.id;
+}
+
+export function getPostDescription(post, length = 150) {
+	return post.content.replace(/<[^>]*>/g, '').trim().substring(0, length);
+}
+
 function readPostFile(file) {
 	const fileContent = readFileSync(join(POSTS_DIR, file), 'utf-8');
 	return parsePostFile(file, fileContent);
